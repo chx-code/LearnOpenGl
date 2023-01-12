@@ -1,0 +1,44 @@
+# gradle ignore
+xfusion*/
+target/
+output/
+build/
+.gradle/
+# gradle/
+# *.jar
+*.war
+*.zip
+*.tar
+*.tar.gz
+tree.txt
+# gradlew
+# gradlew.bat
+
+# eclipse ignore
+.settings/
+.project
+.classpath
+
+# idea ignore
+.idea/
+*.ipr
+*.iml
+.gradle
+# /gradle
+.idea
+output
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+/.idea/caches
+/.idea/gradle.xml
+.DS_Store
+/build/
+/build
+/captures
+.externalNativeBuild
+/.cxx
+.classpath
+.project
+.settings
+.vscode
