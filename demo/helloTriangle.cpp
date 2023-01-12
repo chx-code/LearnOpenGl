@@ -132,13 +132,13 @@ int main()
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
-    float vertices[] = {
-         0.5f,  0.5f, 0.0f,  // top right
-         0.5f, -0.5f, 0.0f,  // bottom right
-        -0.5f, -0.5f, 0.0f,  // bottom left
-        -0.5f,  0.5f, 0.0f,  // top left 
-         0.0f,  0.5f, 0.0f   // top middle
-    };
+    // float vertices[] = {
+    //      0.5f,  0.5f, 0.0f,  // top right
+    //      0.5f, -0.5f, 0.0f,  // bottom right
+    //     -0.5f, -0.5f, 0.0f,  // bottom left
+    //     -0.5f,  0.5f, 0.0f,  // top left 
+    //      0.0f,  0.5f, 0.0f   // top middle
+    // };
     float firstTriangle[] = {
         -0.9f, -0.5f, 0.0f,  // left 
         -0.0f, -0.5f, 0.0f,  // right
@@ -149,10 +149,10 @@ int main()
         0.9f, -0.5f, 0.0f,  // right
         0.45f, 0.5f, 0.0f   // top 
     };
-    unsigned int indices[] = {  // note that we start from 0!
-        0, 1, 4,  // first Triangle
-        2, 3, 4   // second Triangle
-    };
+    // unsigned int indices[] = {  // note that we start from 0!
+    //     0, 1, 4,  // first Triangle
+    //     2, 3, 4   // second Triangle
+    // };
     // unsigned int VBO, VAO, EBO;
     unsigned int VAO[2], VBO[2];
     glGenVertexArrays(2, VAO);
@@ -176,14 +176,14 @@ int main()
     glEnableVertexAttribArray(0);
 
     // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
-    glBindBuffer(GL_ARRAY_BUFFER, 0); 
+    // glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     // remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
     //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-    glBindVertexArray(0); 
+    // glBindVertexArray(0); 
 
 
     // uncomment this call to draw in wireframe polygons.

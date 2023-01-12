@@ -21,7 +21,10 @@ link_directories(${THIRD_PARTY_DIR}/glfw)
 
 
 add_executable(helloTriangle demo/helloTriangle.cpp ${CMAKE_SOURCE_DIR}/src/glad.c)
-# add_executable(LearnOpenGl2 demo/main.cpp ${CMAKE_SOURCE_DIR}/src/glad.c)
 
 target_link_libraries(helloTriangle glfw3)
 target_link_libraries(helloTriangle dl)
+
+add_executable(shaderTest demo/shaderTest.cpp ${CMAKE_SOURCE_DIR}/src/glad.c ${CMAKE_SOURCE_DIR}/src/common/shader.cpp)
+target_link_libraries(shaderTest glfw3)
+target_link_libraries(shaderTest dl)

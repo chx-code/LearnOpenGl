@@ -1,7 +1,7 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <glad/glad.h>; // 包含glad来获取所有的必须OpenGL头文件
+#include <glad/glad.h> // 包含glad来获取所有的必须OpenGL头文件
 
 #include <string>
 #include <fstream>
@@ -23,6 +23,7 @@ public:
     void setBool(const std::string &name, bool value) const;  
     void setInt(const std::string &name, int value) const;   
     void setFloat(const std::string &name, float value) const;
+    void setVec2(const std::string &name, float valueX, float valueY) const;
 };
 
 #endif
