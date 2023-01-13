@@ -2,7 +2,10 @@ cmake_minimum_required(VERSION 2.8)
 
 project(LearnOpenGl)
 
+SET(CMAKE_BUILD_TYPE "Debug") 
+
 SET(CMAKE_CXX_FLAGS "-g -Wall -std=c++0x")
+SET(CMAKE_CXX_FLAGS_DEBUG "-g -Wall -std=c++0x")
 
 message(${CMAKE_SOURCE_DIR})
 
@@ -37,3 +40,10 @@ target_link_libraries(textureTest dl)
 add_executable(transformTest demo/transformTest.cpp ${CMAKE_SOURCE_DIR}/src/glad.c ${CMAKE_SOURCE_DIR}/src/common/shader.cpp)
 target_link_libraries(transformTest glfw3)
 target_link_libraries(transformTest dl)
+
+add_executable(coordinateSystemsTest demo/coordinateSystemsTest.cpp 
+    ${CMAKE_SOURCE_DIR}/src/glad.c 
+    ${CMAKE_SOURCE_DIR}/src/common/shader.cpp 
+    ${CMAKE_SOURCE_DIR}/src/common/window.cpp)
+target_link_libraries(coordinateSystemsTest glfw3)
+target_link_libraries(coordinateSystemsTest dl)
