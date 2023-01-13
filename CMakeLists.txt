@@ -14,6 +14,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${CMAKE_SOURCE_DIR}/include/common)
 include_directories(${CMAKE_SOURCE_DIR}/include/glad)
 include_directories(${CMAKE_SOURCE_DIR}/include/glfw)
+include_directories(${CMAKE_SOURCE_DIR}/include/glm)
 include_directories(${THIRD_PARTY_DIR})
 
 link_directories(${THIRD_PARTY_DIR})
