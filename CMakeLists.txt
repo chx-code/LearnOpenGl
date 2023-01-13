@@ -28,3 +28,7 @@ target_link_libraries(helloTriangle dl)
 add_executable(shaderTest demo/shaderTest.cpp ${CMAKE_SOURCE_DIR}/src/glad.c ${CMAKE_SOURCE_DIR}/src/common/shader.cpp)
 target_link_libraries(shaderTest glfw3)
 target_link_libraries(shaderTest dl)
+
+add_executable(textureTest demo/textureTest.cpp ${CMAKE_SOURCE_DIR}/src/glad.c ${CMAKE_SOURCE_DIR}/src/common/shader.cpp)
+target_link_libraries(textureTest glfw3)
+target_link_libraries(textureTest dl)
