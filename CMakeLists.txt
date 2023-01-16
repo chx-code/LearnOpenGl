@@ -44,6 +44,23 @@ target_link_libraries(transformTest dl)
 add_executable(coordinateSystemsTest demo/coordinateSystemsTest.cpp 
     ${CMAKE_SOURCE_DIR}/src/glad.c 
     ${CMAKE_SOURCE_DIR}/src/common/shader.cpp 
-    ${CMAKE_SOURCE_DIR}/src/common/window.cpp)
+    ${CMAKE_SOURCE_DIR}/src/common/window.cpp
+    ${CMAKE_SOURCE_DIR}/src/common/camera.cpp)
 target_link_libraries(coordinateSystemsTest glfw3)
 target_link_libraries(coordinateSystemsTest dl)
+
+add_executable(cameraTest demo/cameraTest.cpp 
+    ${CMAKE_SOURCE_DIR}/src/glad.c 
+    ${CMAKE_SOURCE_DIR}/src/common/shader.cpp 
+    ${CMAKE_SOURCE_DIR}/src/common/window.cpp
+    ${CMAKE_SOURCE_DIR}/src/common/camera.cpp)
+target_link_libraries(cameraTest glfw3)
+target_link_libraries(cameraTest dl)
+
+add_executable(test demo/test.cpp 
+    ${CMAKE_SOURCE_DIR}/src/glad.c 
+    ${CMAKE_SOURCE_DIR}/src/common/shader.cpp 
+    ${CMAKE_SOURCE_DIR}/src/common/window.cpp
+    ${CMAKE_SOURCE_DIR}/src/common/camera.cpp)
+target_link_libraries(test glfw3)
+target_link_libraries(test dl)

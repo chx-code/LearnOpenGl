@@ -162,7 +162,8 @@ int main() {
     std::function<void()> draw = [&]() -> void {
         // 注意乘法要从右向左读
         glm::mat4 model = glm::rotate(glm::mat4(1.0f), (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-        glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f - (float)(mWindow.up - mWindow.down) / 100.0));
+        glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
+        // glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f - (float)(mWindow.up - mWindow.down) / 100.0));
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)(mWindow.getWidth() / (mWindow.getHeight())), 0.1f, 100.0f);
 
         glm::mat4 transform = projection * view * model;
