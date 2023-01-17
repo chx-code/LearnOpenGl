@@ -23,6 +23,8 @@ include_directories(${THIRD_PARTY_DIR})
 link_directories(${THIRD_PARTY_DIR})
 link_directories(${THIRD_PARTY_DIR}/glfw)
 
+aux_source_directory(${CMAKE_SOURCE_DIR}/src/common SOURCES_COMMON)
+
 
 add_executable(helloTriangle demo/helloTriangle.cpp ${CMAKE_SOURCE_DIR}/src/glad.c)
 
@@ -31,42 +33,36 @@ target_link_libraries(helloTriangle dl)
 
 add_executable(shaderTest demo/shaderTest.cpp 
     ${CMAKE_SOURCE_DIR}/src/glad.c 
-    ${CMAKE_SOURCE_DIR}/src/common/Shader.cpp)
+    ${SOURCES_COMMON})
 target_link_libraries(shaderTest glfw3)
 target_link_libraries(shaderTest dl)
 
 add_executable(textureTest demo/textureTest.cpp 
-${CMAKE_SOURCE_DIR}/src/glad.c 
-${CMAKE_SOURCE_DIR}/src/common/Shader.cpp)
+    ${CMAKE_SOURCE_DIR}/src/glad.c 
+    ${SOURCES_COMMON})
 target_link_libraries(textureTest glfw3)
 target_link_libraries(textureTest dl)
 
 add_executable(transformTest demo/transformTest.cpp 
-${CMAKE_SOURCE_DIR}/src/glad.c 
-${CMAKE_SOURCE_DIR}/src/common/Shader.cpp)
+    ${CMAKE_SOURCE_DIR}/src/glad.c 
+    ${SOURCES_COMMON})
 target_link_libraries(transformTest glfw3)
 target_link_libraries(transformTest dl)
 
 add_executable(coordinateSystemsTest demo/coordinateSystemsTest.cpp 
     ${CMAKE_SOURCE_DIR}/src/glad.c 
-    ${CMAKE_SOURCE_DIR}/src/common/Shader.cpp 
-    ${CMAKE_SOURCE_DIR}/src/common/Scene.cpp
-    ${CMAKE_SOURCE_DIR}/src/common/Camera.cpp)
+    ${SOURCES_COMMON})
 target_link_libraries(coordinateSystemsTest glfw3)
 target_link_libraries(coordinateSystemsTest dl)
 
 add_executable(cameraTest demo/cameraTest.cpp 
     ${CMAKE_SOURCE_DIR}/src/glad.c 
-    ${CMAKE_SOURCE_DIR}/src/common/Shader.cpp 
-    ${CMAKE_SOURCE_DIR}/src/common/Scene.cpp
-    ${CMAKE_SOURCE_DIR}/src/common/Camera.cpp)
+    ${SOURCES_COMMON})
 target_link_libraries(cameraTest glfw3)
 target_link_libraries(cameraTest dl)
 
 add_executable(lightTest demo/lightTest.cpp 
     ${CMAKE_SOURCE_DIR}/src/glad.c 
-    ${CMAKE_SOURCE_DIR}/src/common/Shader.cpp 
-    ${CMAKE_SOURCE_DIR}/src/common/Scene.cpp
-    ${CMAKE_SOURCE_DIR}/src/common/Camera.cpp)
+    ${SOURCES_COMMON})
 target_link_libraries(lightTest glfw3)
 target_link_libraries(lightTest dl)
