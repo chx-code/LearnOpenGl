@@ -38,7 +38,6 @@ int main() {
         glm::mat4 view = mWindow.mCamera.getView();
         glm::mat4 projection = mWindow.mCamera.getProjection();
         
-        glBindVertexArray(VAO);
         for(unsigned int i = 0; i < 10; i++) {
             model = glm::translate(glm::mat4(1.0f), cubePositions[i]);
             float angle = 20.0f * i;
