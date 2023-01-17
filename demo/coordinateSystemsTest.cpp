@@ -10,11 +10,11 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 
-#include "shader.h"
-#include "window.h"
+#include "Shader.h"
+#include "Scene.h"
 
 int main() {
-    Window mWindow = Window();
+    Scene mWindow = Scene();
 
     int width1, height1, nrChannels1;
     stbi_set_flip_vertically_on_load(true);

@@ -1,10 +1,10 @@
-#include "window.h"
-#include "shader.h"
-#include "texture.h"
+#include "Scene.h"
+#include "Shader.h"
+#include "Texture.h"
 #include "input.h"
 
 int main() {
-    Window *window = new Window();
+    Scene *window = new Scene();
     Shader lightingShader = Shader("/home/caros/chx/learnOpenGl/shader/vertexShader/normalVertexShader.vs", 
         "/home/caros/chx/learnOpenGl/shader/fragmentShader/lightFragmentShader.fs");
     Shader lampShader = Shader("/home/caros/chx/learnOpenGl/shader/vertexShader/normalVertexShader.vs", 

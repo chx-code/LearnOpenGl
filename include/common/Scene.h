@@ -8,7 +8,7 @@
 #include <iostream>
 #include <functional>
 
-#include "common/camera.h"
+#include "common/Camera.h"
 
 using namespace glm;
 using namespace std;
@@ -17,7 +17,7 @@ using namespace std;
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-class Window
+class Scene
 {
 private:
     GLFWwindow* mWindow;
@@ -33,8 +33,8 @@ private:
 public:
     static Camera mCamera;
 
-    Window(/* args */);
-    ~Window();
+    Scene(/* args */);
+    ~Scene();
 
     int getWidth();
     int getHeight();

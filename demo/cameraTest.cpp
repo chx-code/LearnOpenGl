@@ -1,10 +1,10 @@
-#include "shader.h"
-#include "texture.h"
-#include "window.h"
+#include "Shader.h"
+#include "Texture.h"
+#include "Scene.h"
 #include "input.h"
 
 int main() {
-    Window mWindow = Window();
+    Scene mWindow = Scene();
     Shader coordinateShader("/home/caros/chx/learnOpenGl/shader/vertexShader/coorainateVertexShader.vs", 
                         "/home/caros/chx/learnOpenGl/shader/fragmentShader/textureFragmentShader.fs");
     Texture mTexture1("/home/caros/chx/learnOpenGl/assets/texture/container.jpg", "jpg");

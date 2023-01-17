@@ -1,10 +1,10 @@
-#include "window.h"
+#include "Scene.h"
 glm::vec3 calculCameraFront(double xpos, double ypos);
 float calculCameraFov(double xoffset, double yoffset);
 
-Camera Window::mCamera = Camera();
+Camera Scene::mCamera = Camera();
 
-Window::Window() {
+Scene::Scene() {
     // glfw: initialize and configure
     // ------------------------------
 
@@ -52,20 +52,20 @@ Window::Window() {
     glEnable(GL_DEPTH_TEST);
 }
 
-Window::~Window() {
+Scene::~Scene() {
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
     glfwTerminate();
 }
 
-int Window::getWidth() {
+int Scene::getWidth() {
     return SCR_WIDTH;
 }
-int Window::getHeight() {
+int Scene::getHeight() {
     return SCR_HEIGHT;
 }
 
-void Window::run(const std::function<void()> &fp) {
+void Scene::run(const std::function<void()> &fp) {
     while (!glfwWindowShouldClose(mWindow)) {
         // 记录时间
         float currentFrame = glfwGetTime();
@@ -95,7 +95,7 @@ void Window::run(const std::function<void()> &fp) {
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-void Window::processInput(GLFWwindow *window)
+void Scene::processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
@@ -155,7 +155,7 @@ glm::vec3 calculCameraFront(double xpos, double ypos)
 
 float calculCameraFov(double xoffset, double yoffset)
 {
-    float fov = Window::mCamera.getCameraFov();
+    float fov = Scene::mCamera.getCameraFov();
     if(fov >= 1.0f && fov <= 45.0f)
         fov -= yoffset;
     if(fov <= 1.0f)

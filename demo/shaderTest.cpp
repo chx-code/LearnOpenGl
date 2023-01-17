@@ -1,7 +1,7 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 
-#include "shader.h"
+#include "Shader.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
