@@ -5,12 +5,12 @@
 
 int main() {
     Scene *window = new Scene();
-    Shader lightingShader = Shader("/home/caros/chx/learnOpenGl/shader/vertexShader/normalVertexShader.vs", 
-        "/home/caros/chx/learnOpenGl/shader/fragmentShader/lightFragmentShader.fs");
-    Shader lightingShader2 = Shader("/home/caros/chx/learnOpenGl/shader/vertexShader/normalVertexShader.vs", 
-        "/home/caros/chx/learnOpenGl/shader/fragmentShader/lightFragmentShader2.fs");
-    Shader lampShader = Shader("/home/caros/chx/learnOpenGl/shader/vertexShader/normalVertexShader.vs", 
-        "/home/caros/chx/learnOpenGl/shader/fragmentShader/lampFragmentShader.fs");
+    Shader lightingShader = Shader(shaderPath + "/vertexShader/normalVertexShader.vs",
+                                   shaderPath + "/fragmentShader/lightFragmentShader.fs");
+    Shader lightingShader2 = Shader(shaderPath + "/vertexShader/normalVertexShader.vs",
+                                    shaderPath + "/fragmentShader/lightFragmentShader2.fs");
+    Shader lampShader = Shader(shaderPath + "vertexShader/normalVertexShader.vs",
+                               shaderPath + "/fragmentShader/lampFragmentShader.fs");
     
     Material material = Material(vec3(1.0f, 0.5f, 0.31f), vec3(1.0f, 0.5f, 0.31f), vec3(0.5f, 0.5f, 0.5f), 32.0f);
     Light light = Light(vec3(0.0f, 0.0f, 20.0f), vec3(0.2f, 0.2f, 0.2f), vec3(0.5f, 0.5f, 0.5f), vec3(1.0f, 1.0f, 1.0f));

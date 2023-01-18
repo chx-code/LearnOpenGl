@@ -16,6 +16,7 @@
 #include "Light.h"
 
 using namespace glm;
+using namespace std;
 
 class Shader
 {
@@ -24,7 +25,7 @@ public:
     unsigned int ID;
 
     // 构造器读取并构建着色器
-    Shader(const char* vertexPath, const char* fragmentPath);
+    Shader(const string &vertexPath, const string &fragmentPath);
     // 使用/激活程序
     void use();
     // uniform工具函数

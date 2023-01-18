@@ -3,6 +3,7 @@ xfusion*/
 target/
 output/
 build/
+cmake-build-debug/
 .gradle/
 # gradle/
 # *.jar

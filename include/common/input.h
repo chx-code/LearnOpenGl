@@ -108,3 +108,5 @@ glm::vec3 cubePositions[] = {
 };
 
 vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
+
+char* shaderPath = "/Users/cuihongxin/code/open_source_project/LearnOpenGl/shader/";

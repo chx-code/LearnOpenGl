@@ -1,6 +1,6 @@
 #include <Shader.h>
 
-Shader::Shader(const char* vertexPath, const char* fragmentPath) {
+Shader::Shader(const string &vertexPath, const string &fragmentPath) {
     // 1. 从文件路径中获取顶点/片元着色器路径
     std::string vertexCode;
     std::string fragmentCode;
@@ -27,7 +27,7 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath) {
         fragmentCode = fShaderStream.str();     
     }
     catch(std::ifstream::failure e) {
-        std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ, " 
+        std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ, "
             << "vShaderFile path : " << vertexPath << ", fragmentPath : " << fragmentPath << std::endl;
     }
 
