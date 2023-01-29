@@ -15,6 +15,7 @@ message(${CMAKE_SOURCE_DIR})
 
 set(THIRD_PARTY_DIR ${CMAKE_SOURCE_DIR}/third_party)
 
+# 源码引用三方库
 add_subdirectory(${THIRD_PARTY_DIR}/glfw-3.3.8/)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
@@ -70,3 +71,9 @@ add_executable(lightTest demo/lightTest.cpp
     ${SOURCES_COMMON})
 target_link_libraries(lightTest glfw)
 target_link_libraries(lightTest dl)
+
+add_executable(lightTexTest demo/lightTexTest.cpp
+        ${CMAKE_SOURCE_DIR}/src/glad.c
+        ${SOURCES_COMMON})
+target_link_libraries(lightTexTest glfw)
+target_link_libraries(lightTexTest dl)

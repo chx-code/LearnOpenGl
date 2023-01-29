@@ -4,6 +4,8 @@
 #include <glfw/glfw3.h>
 #include <iostream>
 
+using namespace std;
+
 class Texture
 {
 private:
@@ -12,6 +14,7 @@ private:
     bool flip_vertically = true;
 public:
     Texture(char const *filename, char const *filetype);
+    Texture(const string filename, const string filetype);
     ~Texture();
 
     unsigned int getTexture();
@@ -36,9 +39,9 @@ Texture::Texture(char const *filename, char const *filetype)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     if (data) {
-        if (filetype == (char*)"jpg") {
+        if (!strcmp(filetype, (char*)"jpg")) {
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        } else if (filetype == (char*)"png") {
+        } else if (!strcmp(filetype, (char*)"png")) {
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         }
         
@@ -58,4 +61,12 @@ Texture::~Texture()
 
 unsigned int Texture::getTexture() {
     return mTexture;
+}
+
+Texture::Texture(string filename, string filetype) {
+    new (this) Texture(filename.c_str(), filetype.c_str());
+}
+
+void Texture::BindTexture() {
+
 }
