@@ -14,6 +14,9 @@
 
 #include "Material.h"
 #include "Light.h"
+#include "DirLight.h"
+#include "PointLight.h"
+#include "SpotLight.h"
 
 using namespace glm;
 using namespace std;
@@ -39,6 +42,9 @@ public:
 
     void setMaterial(const std::string &name, const Material& value) const;
     void setLight(const std::string &name, const Light& value) const;
+    void setLight(const std::string &name, const DirLight& value) const;
+    void setLight(const std::string &name, const PointLight& value) const;
+    void setLight(const std::string &name, const SpotLight& value) const;
 };
 
 #endif

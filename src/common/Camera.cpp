@@ -4,11 +4,11 @@ Camera::Camera(/* args */)
 {
 }
 
-Camera::Camera(glm::vec3 CameraPos, glm::vec3 mCameraFront, glm::vec3 mCameraUp)
+Camera::Camera(glm::vec3 CameraPos, glm::vec3 CameraFront, glm::vec3 CameraUp)
 {
     mCameraPos = CameraPos;
-    mCameraFront = mCameraFront;
-    mCameraUp = mCameraUp;
+    mCameraFront = CameraFront;
+    mCameraUp = CameraUp;
 
     mView = glm::lookAt(mCameraPos, mCameraPos + mCameraFront, mCameraUp);
 }

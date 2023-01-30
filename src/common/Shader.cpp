@@ -134,3 +134,37 @@ void Shader::setLight(const std::string &name, const Light &value) const
     this->setVec3("light.diffuse", value.diffuse);
     this->setVec3("light.specular", value.specular);
 }
+
+void Shader::setLight(const string &name, const DirLight &value) const {
+    this->setVec3("light.direction", value.direction);
+    this->setVec3("light.ambient", value.ambient);
+    this->setVec3("light.diffuse", value.diffuse);
+    this->setVec3("light.specular", value.specular);
+}
+
+void Shader::setLight(const string &name, const PointLight &value) const {
+    this->setVec3("light.position", value.position);
+    // this->setVec3("light.direction", value.direction);
+    this->setVec3("light.ambient", value.ambient);
+    this->setVec3("light.diffuse", value.diffuse);
+    this->setVec3("light.specular", value.specular);
+
+    this->setFloat("light.constant",  value.constant);
+    this->setFloat("light.linear",    value.linear);
+    this->setFloat("light.quadratic", value.quadratic);
+}
+
+void Shader::setLight(const string &name, const SpotLight &value) const {
+    this->setVec3("light.position",  value.position);
+    this->setVec3("light.direction", value.direction);
+    this->setFloat("light.cutOff",   glm::cos(glm::radians(value.cutOff)));
+    this->setFloat("light.outerCutOff",   glm::cos(glm::radians(value.outerCutOff)));
+
+    this->setVec3("light.ambient", value.ambient);
+    this->setVec3("light.diffuse", value.diffuse);
+    this->setVec3("light.specular", value.specular);
+
+    this->setFloat("light.constant",  value.constant);
+    this->setFloat("light.linear",    value.linear);
+    this->setFloat("light.quadratic", value.quadratic);
+}

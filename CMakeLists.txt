@@ -29,6 +29,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include/glm)
 
 link_directories(${THIRD_PARTY_DIR})
 
+# common cpp
 aux_source_directory(${CMAKE_SOURCE_DIR}/src/common SOURCES_COMMON)
 
 add_executable(helloTriangle demo/helloTriangle.cpp
@@ -77,3 +78,15 @@ add_executable(lightTexTest demo/lightTexTest.cpp
         ${SOURCES_COMMON})
 target_link_libraries(lightTexTest glfw)
 target_link_libraries(lightTexTest dl)
+
+add_executable(lightCasterTest demo/lightCasterTest.cpp
+        ${CMAKE_SOURCE_DIR}/src/glad.c
+        ${SOURCES_COMMON})
+target_link_libraries(lightCasterTest glfw)
+target_link_libraries(lightCasterTest dl)
+
+add_executable(mulLightTest demo/mulLightTest.cpp
+        ${CMAKE_SOURCE_DIR}/src/glad.c
+        ${SOURCES_COMMON})
+target_link_libraries(mulLightTest glfw)
+target_link_libraries(mulLightTest dl)
