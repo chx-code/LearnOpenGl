@@ -17,6 +17,7 @@ set(THIRD_PARTY_DIR ${CMAKE_SOURCE_DIR}/third_party)
 
 # 源码引用三方库
 add_subdirectory(${THIRD_PARTY_DIR}/glfw-3.3.8/)
+add_subdirectory(${THIRD_PARTY_DIR}/assimp/)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${CMAKE_SOURCE_DIR})
