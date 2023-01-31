@@ -32,8 +32,8 @@ public:
     // 使用/激活程序
     void use();
     // uniform工具函数
-    void setBool(const std::string &name, bool value) const;  
-    void setInt(const std::string &name, int value) const;   
+    void setBool(const std::string &name, bool value) const;
+    void setInt(const std::string &name, int value) const;
     void setFloat(const std::string &name, float value) const;
     void setVec2(const std::string &name, float valueX, float valueY) const;
     void setVec3(const std::string &name, const vec3 &value) const;

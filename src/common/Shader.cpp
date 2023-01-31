@@ -18,13 +18,13 @@ Shader::Shader(const string &vertexPath, const string &fragmentPath) {
         std::stringstream vShaderStream, fShaderStream;
         // 读取文件的缓冲内容到数据流中
         vShaderStream << vShaderFile.rdbuf();
-        fShaderStream << fShaderFile.rdbuf();       
+        fShaderStream << fShaderFile.rdbuf();
         // 关闭文件处理器
         vShaderFile.close();
         fShaderFile.close();
         // 转换数据流到string
         vertexCode   = vShaderStream.str();
-        fragmentCode = fShaderStream.str();     
+        fragmentCode = fShaderStream.str();
     }
     catch(std::ifstream::failure e) {
         std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ, "
@@ -49,7 +49,7 @@ Shader::Shader(const string &vertexPath, const string &fragmentPath) {
     {
         glGetShaderInfoLog(vertex, 512, NULL, infoLog);
         std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED, "
-            << "infoLog : " << infoLog 
+            << "infoLog : " << infoLog
             << "shader file path : " << vertexPath << std::endl;
     };
 
@@ -63,7 +63,7 @@ Shader::Shader(const string &vertexPath, const string &fragmentPath) {
     {
         glGetShaderInfoLog(vertex, 512, NULL, infoLog);
         std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED, "
-            << "infoLog : " << infoLog 
+            << "infoLog : " << infoLog
             << "shader file path : " << fragmentPath << std::endl;
     };
 

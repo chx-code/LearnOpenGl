@@ -4,8 +4,9 @@ project(LearnOpenGl)
 
 SET(CMAKE_BUILD_TYPE "Debug") 
 
+# -fvisibility 设置符号可见性
 SET(CMAKE_CXX_FLAGS "-g -Wall -std=c++0x")
-SET(CMAKE_CXX_FLAGS_DEBUG "-g -Wall -std=c++0x")
+SET(CMAKE_CXX_FLAGS_DEBUG "-g -Wall -std=c++0x -fvisibility=hidden")
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
@@ -27,6 +28,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include/common)
 include_directories(${CMAKE_SOURCE_DIR}/include/glad)
 include_directories(${CMAKE_SOURCE_DIR}/include/glfw)
 include_directories(${CMAKE_SOURCE_DIR}/include/glm)
+include_directories(${THIRD_PARTY_DIR}/assimp/include/)
 
 link_directories(${THIRD_PARTY_DIR})
 
@@ -91,3 +93,11 @@ add_executable(mulLightTest demo/mulLightTest.cpp
         ${SOURCES_COMMON})
 target_link_libraries(mulLightTest glfw)
 target_link_libraries(mulLightTest dl)
+target_link_libraries(mulLightTest assimp)
+
+add_executable(assimpTest demo/assimpTest.cpp
+        ${CMAKE_SOURCE_DIR}/src/glad.c
+        ${SOURCES_COMMON})
+target_link_libraries(assimpTest glfw)
+target_link_libraries(assimpTest dl)
+target_link_libraries(assimpTest assimp)
