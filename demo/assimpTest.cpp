@@ -23,16 +23,7 @@ int main() {
         nanosultShader.setMat4("projection", projection);
         nanosultShader.setMat4("model", model);
         // spotLight
-        nanosultShader.setVec3("spotLight.position", Scene::mCamera.getCameraPos());
-        nanosultShader.setVec3("spotLight.direction", Scene::mCamera.getCameraFront());
-        nanosultShader.setVec3("spotLight.ambient", 0.0f, 0.0f, 0.0f);
-        nanosultShader.setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
-        nanosultShader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
-        nanosultShader.setFloat("spotLight.constant", 1.0f);
-        nanosultShader.setFloat("spotLight.linear", 0.09f);
-        nanosultShader.setFloat("spotLight.quadratic", 0.032f);
-        nanosultShader.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
-        nanosultShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+        nanosultShader.setLight("spotLight", Scene::mCameraSpotLight);
 
         nanosult->Draw(nanosultShader);
     });

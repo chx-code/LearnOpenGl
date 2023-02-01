@@ -3,6 +3,10 @@ glm::vec3 calculCameraFront(double xpos, double ypos);
 float calculCameraFov(double xoffset, double yoffset);
 
 Camera Scene::mCamera = Camera();
+SpotLight Scene::mCameraSpotLight = SpotLight(Scene::mCamera.getCameraPos(), Scene::mCamera.getCameraFront(),
+                                              12.5f, 15.0f,
+                                              vec3(0.0f, 0.0f, 0.0f), vec3(1.0f, 1.0f, 1.0f), vec3(1.0f, 1.0f, 1.0f),
+                                              1.0f, 0.09f, 0.032f);
 
 Scene::Scene() {
     // glfw: initialize and configure
@@ -71,7 +75,7 @@ void Scene::run(const std::function<void()> &fp) {
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
-        cameraSpeed = 2.5f * deltaTime;
+        cameraSpeed = 12.5f * deltaTime;
 
         // input
         // -----
@@ -83,7 +87,8 @@ void Scene::run(const std::function<void()> &fp) {
         // glClear(GL_COLOR_BUFFER_BIT);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
+        // update
+        updateCameraSpotLight();
         fp();
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -115,6 +120,11 @@ void Scene::processInput(GLFWwindow *window)
         cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
     
     mCamera.updateCamera(cameraPos, cameraFront, cameraUp);
+}
+
+void Scene::updateCameraSpotLight() {
+    mCameraSpotLight.position = mCamera.getCameraPos();
+    mCameraSpotLight.direction = mCamera.getCameraFront();
 }
 
 glm::vec3 calculCameraFront(double xpos, double ypos)

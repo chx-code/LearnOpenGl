@@ -18,10 +18,11 @@ private:
 
     glm::mat4 mView        = glm::lookAt(mCameraPos, mCameraPos + mCameraFront, mCameraUp);
     glm::mat4 mProjection  = glm::perspective(glm::radians(mCameraFov), mCameraAspect, mCameraNear, mCameraFar);
+
+    void update();
 public:
     Camera();
     Camera(glm::vec3 CameraPos, glm::vec3 CameraFront, glm::vec3 CameraUp);
-    ~Camera();
 
     void setCameraPos(glm::vec3 CameraPos);
     void setCameraPos(float x, float y, float z);
@@ -44,5 +45,5 @@ public:
     glm::mat4 getView() const { return mView; }
     glm::mat4 getProjection() const { return mProjection; }
 
-    void updateCamera(glm::vec3 CameraPos, glm::vec3 mCameraFront, glm::vec3 mCameraUp);
+    void updateCamera(glm::vec3 CameraPos, glm::vec3 CameraFront, glm::vec3 CameraUp);
 };

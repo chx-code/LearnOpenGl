@@ -1,7 +1,7 @@
 #include <Camera.h>
 
-Camera::Camera(/* args */)
-{
+Camera::Camera() {
+
 }
 
 Camera::Camera(glm::vec3 CameraPos, glm::vec3 CameraFront, glm::vec3 CameraUp)
@@ -10,73 +10,78 @@ Camera::Camera(glm::vec3 CameraPos, glm::vec3 CameraFront, glm::vec3 CameraUp)
     mCameraFront = CameraFront;
     mCameraUp = CameraUp;
 
-    mView = glm::lookAt(mCameraPos, mCameraPos + mCameraFront, mCameraUp);
-}
-
-Camera::~Camera()
-{
+    update();
 }
 
 void Camera::setCameraPos(glm::vec3 CameraPos)
 {
     mCameraPos = CameraPos;
-    mView = glm::lookAt(mCameraPos, mCameraPos + mCameraFront, mCameraUp);
+    update();
 }
 
 void Camera::setCameraPos(float x, float y, float z)
 {
     mCameraPos = glm::vec3(x, y, z);
-    mView = glm::lookAt(mCameraPos, mCameraPos + mCameraFront, mCameraUp);
+    update();
 }
 
 void Camera::setCameraFront(glm::vec3 CameraFront)
 {
     mCameraFront = CameraFront;
-    mView = glm::lookAt(mCameraPos, mCameraPos + mCameraFront, mCameraUp);
+    update();
 }
 
 void Camera::setCameraFront(float x, float y, float z)
 {
     mCameraFront = glm::vec3(x, y, z);
-    mView = glm::lookAt(mCameraPos, mCameraPos + mCameraFront, mCameraUp);
+    update();
 }
 
 void Camera::setCameraUp(glm::vec3 CameraUp)
 {
     mCameraUp = CameraUp;
-    mView = glm::lookAt(mCameraPos, mCameraPos + mCameraFront, mCameraUp);
+    update();
 }
 
 void Camera::setCameraUp(float x, float y, float z)
 {
     mCameraUp = glm::vec3(x, y, z);
-    mView = glm::lookAt(mCameraPos, mCameraPos + mCameraFront, mCameraUp);
+    update();
 }
 
 void Camera::setCameraFov(float Fov)
 {
     mCameraFov = Fov;
+    update();
 }
 
 void Camera::setCameraAspect(float Aspect)
 {
     mCameraAspect = Aspect;
+    update();
 }
 
 void Camera::setCameraNear(float Near)
 {
     mCameraNear = Near;
+    update();
 }
 
 void Camera::setCameraFar(float Far)
 {
     mCameraFar = Far;
+    update();
 }
 
-void Camera::updateCamera(glm::vec3 CameraPos, glm::vec3 mCameraFront, glm::vec3 mCameraUp)
+void Camera::updateCamera(glm::vec3 CameraPos, glm::vec3 CameraFront, glm::vec3 CameraUp)
 {
     mCameraPos = CameraPos;
-    mCameraFront = mCameraFront;
-    mCameraUp = mCameraUp;
-    mView = glm::lookAt(mCameraPos, mCameraPos + mCameraFront, mCameraUp);
+    mCameraFront = CameraFront;
+    mCameraUp = CameraUp;
+    update();
+}
+
+void Camera::update() {
+    mView        = glm::lookAt(mCameraPos, mCameraPos + mCameraFront, mCameraUp);
+    mProjection  = glm::perspective(glm::radians(mCameraFov), mCameraAspect, mCameraNear, mCameraFar);
 }

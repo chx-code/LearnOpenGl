@@ -9,6 +9,7 @@
 #include <functional>
 
 #include "common/Camera.h"
+#include "common/SpotLight.h"
 
 using namespace glm;
 using namespace std;
@@ -26,13 +27,11 @@ private:
     float lastFrame = 0.0f; // 上一帧的时间
     float cameraSpeed = 0.0f; // 摄像机移动速度
 
-    // c++中由于函数调用时隐式增加了this指针，所以在callback调用时导致参数个数不一致而出错。
-    // 成员函数作为回调，可以采用static的方式传递。因为static没有使用this。
-    // static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
     void processInput(GLFWwindow *window);
-    void framebuffer_size_callback2(GLFWwindow* window, int width, int height) {};
+    void updateCameraSpotLight();
 public:
     static Camera mCamera;
+    static SpotLight mCameraSpotLight;
 
     Scene(/* args */);
     ~Scene();
