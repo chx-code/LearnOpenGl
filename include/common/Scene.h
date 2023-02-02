@@ -18,6 +18,10 @@ using namespace std;
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
+struct SceneConfig {
+    bool objectOutlining;
+};
+
 class Scene
 {
 private:
@@ -27,11 +31,16 @@ private:
     float lastFrame = 0.0f; // 上一帧的时间
     float cameraSpeed = 0.0f; // 摄像机移动速度
 
+    void initGlfw();
+    void initSceneConfig();
+
     void processInput(GLFWwindow *window);
     void updateCameraSpotLight();
 public:
     static Camera mCamera;
     static SpotLight mCameraSpotLight;
+
+    SceneConfig mSceneConfig;
 
     Scene(/* args */);
     ~Scene();

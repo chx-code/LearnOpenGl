@@ -8,24 +8,36 @@ int main() {
     auto *scene = new Scene();
     Shader nanosultShader = Shader(shaderPath + "/vertexShader/normalVertexShader.vs",
                                    shaderPath + "/fragmentShader/diffTexFS.frag");
+    Shader baseShader = Shader(shaderPath + "/vertexShader/normalVertexShader.vs",
+                                   shaderPath + "/fragmentShader/baseFragmentShader.fs");
 
     auto* nanosult = new Model("/Users/cuihongxin/code/open_source_project/LearnOpenGl/assets/models/nanosuit.obj");
 
     scene->run([&](){
-        glm::mat4 view = Scene::mCamera.getView();
-        glm::mat4 projection = Scene::mCamera.getProjection();
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-        model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 
         nanosultShader.use();
-        nanosultShader.setMat4("view", view);
-        nanosultShader.setMat4("projection", projection);
-        nanosultShader.setMat4("model", model);
+        nanosultShader.setMat4("view", Scene::mCamera.getView());
+        nanosultShader.setMat4("projection", Scene::mCamera.getProjection());
+        nanosult->setScale(vec3(0.99f));
+        nanosultShader.setMat4("model", nanosult->getModelMatrix());
         // spotLight
         nanosultShader.setLight("spotLight", Scene::mCameraSpotLight);
 
+        glStencilFunc(GL_ALWAYS, 1, 0xFF);
+        glStencilMask(0xFF);
         nanosult->Draw(nanosultShader);
+
+        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+        glStencilMask(0x00);
+        glDisable(GL_DEPTH_TEST);
+        baseShader.use();
+        baseShader.setMat4("view", Scene::mCamera.getView());
+        baseShader.setMat4("projection", Scene::mCamera.getProjection());
+        nanosult->setScale(vec3(1.0f));
+        baseShader.setMat4("model", nanosult->getModelMatrix());
+        nanosult->Draw(baseShader);
+        glStencilMask(0xFF);
+        glEnable(GL_DEPTH_TEST);
     });
 
     delete nanosult;

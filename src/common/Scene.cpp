@@ -9,9 +9,85 @@ SpotLight Scene::mCameraSpotLight = SpotLight(Scene::mCamera.getCameraPos(), Sce
                                               1.0f, 0.09f, 0.032f);
 
 Scene::Scene() {
-    // glfw: initialize and configure
-    // ------------------------------
+    // first
+    initSceneConfig();
+    // second
+    initGlfw();
+}
 
+Scene::~Scene() {
+    // glfw: terminate, clearing all previously allocated GLFW resources.
+    // ------------------------------------------------------------------
+    glfwTerminate();
+}
+
+int Scene::getWidth() {
+    return SCR_WIDTH;
+}
+int Scene::getHeight() {
+    return SCR_HEIGHT;
+}
+
+void Scene::run(const std::function<void()> &fp) {
+    while (!glfwWindowShouldClose(mWindow)) {
+        // 记录时间
+        float currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+        cameraSpeed = 12.5f * deltaTime;
+
+        // input
+        // -----
+        processInput(mWindow);
+
+        // render
+        // ------
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+        // update
+        updateCameraSpotLight();
+        fp();
+
+        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
+        // -------------------------------------------------------------------------------
+        glfwSwapBuffers(mWindow);
+        glfwPollEvents();
+    }
+}
+
+// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
+// ---------------------------------------------------------------------------------------------------------
+void Scene::processInput(GLFWwindow *window)
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
+    
+    // mCamera.setCameraFront(calculCameraFront(mousePos.x, mousePos.y));
+    glm::vec3 cameraPos = mCamera.getCameraPos();
+    glm::vec3 cameraFront = mCamera.getCameraFront();
+    glm::vec3 cameraUp = mCamera.getCameraUp();
+
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        cameraPos += cameraSpeed * cameraFront;
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        cameraPos -= cameraSpeed * cameraFront;
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    
+    mCamera.updateCamera(cameraPos, cameraFront, cameraUp);
+}
+
+void Scene::updateCameraSpotLight() {
+    mCameraSpotLight.position = mCamera.getCameraPos();
+    mCameraSpotLight.direction = mCamera.getCameraFront();
+}
+
+void Scene::initGlfw() {
+// glfw: initialize and configure
+    // ------------------------------
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -54,77 +130,13 @@ Scene::Scene() {
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
     glEnable(GL_DEPTH_TEST);
+    // 模板测试
+    glEnable(GL_STENCIL_TEST);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+    glStencilMask(0x00); // 默认禁止写入
 }
 
-Scene::~Scene() {
-    // glfw: terminate, clearing all previously allocated GLFW resources.
-    // ------------------------------------------------------------------
-    glfwTerminate();
-}
-
-int Scene::getWidth() {
-    return SCR_WIDTH;
-}
-int Scene::getHeight() {
-    return SCR_HEIGHT;
-}
-
-void Scene::run(const std::function<void()> &fp) {
-    while (!glfwWindowShouldClose(mWindow)) {
-        // 记录时间
-        float currentFrame = glfwGetTime();
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
-        cameraSpeed = 12.5f * deltaTime;
-
-        // input
-        // -----
-        processInput(mWindow);
-
-        // render
-        // ------
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        // glClear(GL_COLOR_BUFFER_BIT);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        // update
-        updateCameraSpotLight();
-        fp();
-
-        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-        // -------------------------------------------------------------------------------
-        glfwSwapBuffers(mWindow);
-        glfwPollEvents();
-    }
-}
-
-// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-// ---------------------------------------------------------------------------------------------------------
-void Scene::processInput(GLFWwindow *window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-    
-    // mCamera.setCameraFront(calculCameraFront(mousePos.x, mousePos.y));
-    glm::vec3 cameraPos = mCamera.getCameraPos();
-    glm::vec3 cameraFront = mCamera.getCameraFront();
-    glm::vec3 cameraUp = mCamera.getCameraUp();
-
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        cameraPos += cameraSpeed * cameraFront;
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        cameraPos -= cameraSpeed * cameraFront;
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-    
-    mCamera.updateCamera(cameraPos, cameraFront, cameraUp);
-}
-
-void Scene::updateCameraSpotLight() {
-    mCameraSpotLight.position = mCamera.getCameraPos();
-    mCameraSpotLight.direction = mCamera.getCameraFront();
+void Scene::initSceneConfig() {
 }
 
 glm::vec3 calculCameraFront(double xpos, double ypos)

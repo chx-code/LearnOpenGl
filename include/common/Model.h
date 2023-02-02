@@ -20,18 +20,36 @@
 using namespace std;
 using namespace glm;
 
+struct Transform {
+    vec3 position;
+    vec3 rotation;
+    vec3 scale;
+};
+
 class Model {
 private:
     vector<Mesh> meshes;
+    Transform mTransform = {vec3(0.0f), vec3(0.0f), vec3(1.0f)};
+
     string directoryPath;
     static vector<Texture> textures_loaded;
 
-    void loadModel(string path);
+    void loadModel(const string& path);
     void processNode(aiNode *node, const aiScene *scene);
     Mesh processMesh(aiMesh *mesh, const aiScene *scene);
     vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type,
-                                         string typeName);
+                                         const string& typeName);
+
 public:
     explicit Model(const char *path);
     void Draw(Shader shader);
+
+    glm::mat4 getModelMatrix() const;
+
+    const vec3 &getPosition() const;
+    void setPosition(const vec3 &position);
+    const vec3 &getRotation() const;
+    void setRotation(const vec3 &rotation);
+    const vec3 &getScale() const;
+    void setScale(const vec3 &scale);
 };

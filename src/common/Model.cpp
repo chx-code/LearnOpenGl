@@ -10,11 +10,11 @@ Model::Model(const char *path) {
 }
 
 void Model::Draw(Shader shader) {
-    for(unsigned int i = 0; i < meshes.size(); i++)
-        meshes[i].Draw(shader);
+    for(auto & mesh : meshes)
+        mesh.Draw(shader);
 }
 
-void Model::loadModel(string path) {
+void Model::loadModel(const string& path) {
     Assimp::Importer importer;
     const aiScene *scene = importer.ReadFile(path,
                                              aiProcess_Triangulate |
@@ -84,7 +84,7 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
     return Mesh(vertices, indices, textures);
 }
 
-vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName) {
+vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType type, const string& typeName) {
     vector<Texture> textures;
     for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
     {
@@ -112,4 +112,41 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType type,
         }
     }
     return textures;
+}
+
+glm::mat4 Model::getModelMatrix() const {
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::rotate(model, glm::radians(mTransform.rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(mTransform.rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(mTransform.rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+
+    model = glm::scale(model, mTransform.scale);
+
+    model = glm::translate(model, mTransform.position);
+
+    return model;
+}
+
+const vec3 &Model::getPosition() const {
+    return mTransform.position;
+}
+
+void Model::setPosition(const vec3 &position) {
+    Model::mTransform.position = position;
+}
+
+const vec3 &Model::getRotation() const {
+    return mTransform.rotation;
+}
+
+void Model::setRotation(const vec3 &rotation) {
+    Model::mTransform.rotation = rotation;
+}
+
+const vec3 &Model::getScale() const {
+    return mTransform.scale;
+}
+
+void Model::setScale(const vec3 &scale) {
+    Model::mTransform.scale = scale;
 }

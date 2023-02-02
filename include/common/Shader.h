@@ -38,7 +38,7 @@ public:
     void setVec2(const std::string &name, float valueX, float valueY) const;
     void setVec3(const std::string &name, const vec3 &value) const;
     void setVec3(const std::string &name, float valueX, float valueY, float valueZ) const;
-    void setMat4(const std::string &name, mat4 &value) const;
+    void setMat4(const std::string &name, const mat4 &value) const;
 
     void setMaterial(const std::string &name, const Material& value) const;
     void setLight(const std::string &name, const Light& value) const;
