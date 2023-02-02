@@ -42,6 +42,8 @@ private:
 
 public:
     explicit Model(const char *path);
+    explicit Model(const Mesh& mesh);
+    explicit Model(const vector<Mesh>& meshes);
     void Draw(Shader shader);
 
     glm::mat4 getModelMatrix() const;

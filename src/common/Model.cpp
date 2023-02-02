@@ -9,6 +9,14 @@ Model::Model(const char *path) {
     loadModel(path);
 }
 
+Model::Model(const Mesh &mesh) {
+    this->meshes.push_back(mesh);
+}
+
+Model::Model(const vector<Mesh>& meshes) {
+    this->meshes = meshes;
+}
+
 void Model::Draw(Shader shader) {
     for(auto & mesh : meshes)
         mesh.Draw(shader);

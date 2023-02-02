@@ -2,8 +2,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "Mesh.h"
 
 using namespace glm;
+using namespace std;
 
 float vertices[] = {
     -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -92,6 +94,14 @@ float normalVertices[] = {
      0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
     -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
     -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
+};
+
+Vertex groundVertices[] = {
+        // positions          // normals           // texture coords
+        Vertex{vec3(-5, 0, -5), vec3(0.0f, 0.0f, 1.0f), vec2(-5, -5)},
+        Vertex{vec3(5, 0, -5), vec3(0.0f, 0.0f, 1.0f), vec2(5, -5)},
+        Vertex{vec3(5, 0, 5), vec3(0.0f, 0.0f, 1.0f), vec2(5, 5)},
+        Vertex{vec3(-5, 0, 5), vec3(0.0f, 0.0f, 1.0f), vec2(-5, 5)}
 };
 
 glm::vec3 cubePositions[] = {
