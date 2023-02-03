@@ -6,7 +6,7 @@
 
 int main() {
     auto *scene = new Scene();
-    scene->mCamera.setCameraPos(vec3(0,5,10));
+    Scene::mCamera.setCameraPos(vec3(0,5,10));
     Shader nanosultShader = Shader(shaderPath + "/vertexShader/normalVertexShader.vs",
                                    shaderPath + "/fragmentShader/diffTexFS.frag");
     Shader baseShader = Shader(shaderPath + "/vertexShader/normalVertexShader.vs",
@@ -15,20 +15,7 @@ int main() {
                                shaderPath + "/fragmentShader/ground.frag");
 
     auto* nanosult = new Model("/Users/cuihongxin/code/open_source_project/LearnOpenGl/assets/models/nanosuit.obj");
-
-    vector<Vertex> groundVb;
-    vector<unsigned int> groundIb;
-    vector<Texture> groundTexs;
-    for (auto groundVertice: groundVertices) {
-        groundVb.push_back(groundVertice);
-    }
-    groundIb.push_back(2);
-    groundIb.push_back(1);
-    groundIb.push_back(0);
-    groundIb.push_back(2);
-    groundIb.push_back(0);
-    groundIb.push_back(3);
-    auto* ground = new Model(Mesh(groundVb, groundIb, groundTexs));
+    auto * ground = new Model("/Users/cuihongxin/code/open_source_project/LearnOpenGl/assets/models/ground.obj");
 
     scene->run([&](){
 
