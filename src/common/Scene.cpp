@@ -137,6 +137,11 @@ void Scene::initGlfw() {
     // 混合
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    // 面剔除
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK); // GL_BACK：只剔除背向面。| GL_FRONT：只剔除正向面。| GL_FRONT_AND_BACK：剔除正向面和背向面。
+    glFrontFace(GL_CCW); // GL_CCW, 逆时针的环绕顺序 | GL_CW，顺时针顺序。
 }
 
 void Scene::initSceneConfig() {

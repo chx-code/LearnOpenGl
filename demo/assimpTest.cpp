@@ -22,11 +22,11 @@ int main() {
     for (auto groundVertice: groundVertices) {
         groundVb.push_back(groundVertice);
     }
-    groundIb.push_back(0);
+    groundIb.push_back(2);
     groundIb.push_back(1);
-    groundIb.push_back(2);
     groundIb.push_back(0);
     groundIb.push_back(2);
+    groundIb.push_back(0);
     groundIb.push_back(3);
     auto* ground = new Model(Mesh(groundVb, groundIb, groundTexs));
 
