@@ -9,12 +9,18 @@ int main() {
     Scene::mCamera.setCameraPos(vec3(0,5,10));
     Shader nanosultShader = Shader(shaderPath + "/vertexShader/normalVertexShader.vs",
                                    shaderPath + "/fragmentShader/diffTexFS.frag");
+    Shader nanosuitReflectionShader = Shader(shaderPath + "/vertexShader/normalVertexShader.vs",
+                                   shaderPath + "/fragmentShader/unlitTex.frag");
+    Shader reflectShader = Shader(shaderPath + "/vertexShader/normalVertexShader.vs",
+                                   shaderPath + "/fragmentShader/reflect.frag");
+    Shader refractShader = Shader(shaderPath + "/vertexShader/normalVertexShader.vs",
+                                   shaderPath + "/fragmentShader/refract.frag");
     Shader baseShader = Shader(shaderPath + "/vertexShader/normalVertexShader.vs",
                                    shaderPath + "/fragmentShader/baseFragmentShader.fs");
     Shader groundShader = Shader(shaderPath + "/vertexShader/normalVertexShader.vs",
                                shaderPath + "/fragmentShader/ground.frag");
 
-    auto* nanosult = new Model("/Users/cuihongxin/code/open_source_project/LearnOpenGl/assets/models/nanosuit.obj");
+    auto* nanosult = new Model("/Users/cuihongxin/code/open_source_project/LearnOpenGl/assets/models/nanosuit_reflection/nanosuit.obj");
     auto * ground = new Model("/Users/cuihongxin/code/open_source_project/LearnOpenGl/assets/models/ground.obj");
 
     scene->run([&](){
@@ -27,9 +33,30 @@ int main() {
         // spotLight
         nanosultShader.setLight("spotLight", Scene::mCameraSpotLight);
 
+        reflectShader.use();
+        reflectShader.setMat4("view", Scene::mCamera.getView());
+        reflectShader.setMat4("projection", Scene::mCamera.getProjection());
+        reflectShader.setMat4("model", nanosult->getModelMatrix());
+        reflectShader.setInt("skybox", 0);
+        reflectShader.setVec3("cameraPos", Scene::mCamera.getCameraPos());
+
+        refractShader.use();
+        refractShader.setMat4("view", Scene::mCamera.getView());
+        refractShader.setMat4("projection", Scene::mCamera.getProjection());
+        refractShader.setMat4("model", nanosult->getModelMatrix());
+        refractShader.setInt("skybox", 0);
+        refractShader.setVec3("cameraPos", Scene::mCamera.getCameraPos());
+
+        nanosuitReflectionShader.use();
+        nanosuitReflectionShader.setMat4("view", Scene::mCamera.getView());
+        nanosuitReflectionShader.setMat4("projection", Scene::mCamera.getProjection());
+        nanosuitReflectionShader.setMat4("model", nanosult->getModelMatrix());
+        nanosuitReflectionShader.setInt("skybox", 0);
+        nanosuitReflectionShader.setVec3("cameraPos", Scene::mCamera.getCameraPos());
+
         glStencilFunc(GL_ALWAYS, 1, 0xFF);
         glStencilMask(0xFF);
-        nanosult->Draw(nanosultShader);
+        nanosult->Draw(nanosuitReflectionShader);
 
         glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
         glStencilMask(0x00);

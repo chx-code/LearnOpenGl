@@ -1,4 +1,6 @@
 #include "Scene.h"
+#include "stb_image.h"
+
 glm::vec3 calculCameraFront(double xpos, double ypos);
 float calculCameraFov(double xoffset, double yoffset);
 
@@ -13,6 +15,7 @@ Scene::Scene() {
     initSceneConfig();
     // second
     initGlfw();
+    initSkybox();
 }
 
 Scene::~Scene() {
@@ -47,7 +50,11 @@ void Scene::run(const std::function<void()> &fp) {
 
         // update
         updateCameraSpotLight();
+
         fp();
+
+        // draw skybox
+        drawSkybox();
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -145,6 +152,78 @@ void Scene::initGlfw() {
 }
 
 void Scene::initSceneConfig() {
+}
+
+void Scene::initSkybox() {
+    vector<std::string> faces {
+        skyboxTexPath + "right.jpg",
+        skyboxTexPath + "left.jpg",
+        skyboxTexPath + "top.jpg",
+        skyboxTexPath + "bottom.jpg",
+        skyboxTexPath + "front.jpg",
+        skyboxTexPath + "back.jpg"
+    };
+    cubemapTexture = loadCubemap(faces);
+    skyboxShader = new Shader("/Users/cuihongxin/code/open_source_project/LearnOpenGl/shader/vertexShader/skybox.vert",
+                              "/Users/cuihongxin/code/open_source_project/LearnOpenGl/shader/fragmentShader/skybox.frag");
+    skyboxModel = new Model("/Users/cuihongxin/code/open_source_project/LearnOpenGl/assets/models/skybox.obj");
+
+    skyboxShader->setInt("skybox", 0);
+}
+
+unsigned int Scene::loadCubemap(vector<std::string> faces) {
+    unsigned int textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+
+    int width, height, nrChannels;
+    for (unsigned int i = 0; i < faces.size(); i++)
+    {
+        unsigned char *data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
+        if (data)
+        {
+            GLenum format;
+            if (nrChannels == 1)
+                format = GL_RED;
+            else if (nrChannels == 3)
+                format = GL_RGB;
+            else if (nrChannels == 4)
+                format = GL_RGBA;
+            else
+                throw std::runtime_error("ERROR empty stack");
+
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+                         0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data
+            );
+            stbi_image_free(data);
+        }
+        else
+        {
+            std::cout << "Cubemap texture failed to load at path: " << faces[i] << std::endl;
+            stbi_image_free(data);
+        }
+    }
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+    return textureID;
+}
+
+void Scene::drawSkybox() {
+    glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+
+    skyboxShader->use();
+    mat4 view = glm::mat4(glm::mat3(Scene::mCamera.getView())); // remove translation from the view matrix
+    skyboxShader->setMat4("view", view);
+    skyboxShader->setMat4("projection", Scene::mCamera.getProjection());
+
+    glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+    skyboxModel->Draw(*skyboxShader);
+
+    glDepthFunc(GL_LESS); // set depth function back to default
 }
 
 glm::vec3 calculCameraFront(double xpos, double ypos)

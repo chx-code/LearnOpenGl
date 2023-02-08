@@ -101,3 +101,10 @@ add_executable(assimpTest demo/assimpTest.cpp
 target_link_libraries(assimpTest glfw)
 target_link_libraries(assimpTest dl)
 target_link_libraries(assimpTest assimp)
+
+add_executable(framebufferTest demo/framebufferTest.cpp
+        ${CMAKE_SOURCE_DIR}/src/glad.c
+        ${SOURCES_COMMON})
+target_link_libraries(framebufferTest glfw)
+target_link_libraries(framebufferTest dl)
+target_link_libraries(framebufferTest assimp)

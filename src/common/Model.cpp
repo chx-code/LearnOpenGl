@@ -18,6 +18,7 @@ Model::Model(const vector<Mesh>& meshes) {
 }
 
 void Model::Draw(Shader shader) {
+    shader.use();
     for(auto & mesh : meshes)
         mesh.Draw(shader);
 }
@@ -61,7 +62,7 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
 
     for(unsigned int i = 0; i < mesh->mNumVertices; i++)
     {
-        Vertex vertex;
+        Vertex vertex{};
         // 处理顶点位置、法线和纹理坐标
         vertex.Position = vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
         vertex.Normal = vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
@@ -87,6 +88,9 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
         vector<Texture> specularMaps = loadMaterialTextures(material,
                                                             aiTextureType_SPECULAR, "texture_specular");
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+        vector<Texture> reflectMaps = loadMaterialTextures(material,
+                                                            aiTextureType_AMBIENT, "texture_reflect");
+        textures.insert(textures.end(), reflectMaps.begin(), reflectMaps.end());
     }
 
     return Mesh(vertices, indices, textures);
