@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 project(Rasterizer)
+add_definitions("-g")
 
 find_package(OpenCV REQUIRED)
 
