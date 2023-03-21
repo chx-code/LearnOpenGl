@@ -11,7 +11,69 @@ bool rayTriangleIntersect(const Vector3f& v0, const Vector3f& v1, const Vector3f
     // that's specified bt v0, v1 and v2 intersects with the ray (whose
     // origin is *orig* and direction is *dir*)
     // Also don't forget to update tnear, u and v.
-    return false;
+    
+    // function1 :
+    //   step1 : calculate the intersection of the ray and the plane
+    //   setp2 : check the intersection in the triangle
+
+    // bool isIntersect = false;
+    // Vector3f edge1 = v1 - v0;
+    // Vector3f edge2 = v2 - v1;
+    // Vector3f edge3 = v0 - v2;
+    // Vector3f normal = normalize(crossProduct(edge1, edge2));
+
+    // float d = -dotProduct(normal, v0);
+    // float t = -(dotProduct(normal, orig) + d) / dotProduct(normal, dir);
+
+    // if (t > 0) {
+    //     Vector3f intersection = orig + t * dir;
+
+    //     Vector3f edge4 = intersection - v0;
+    //     Vector3f edge5 = intersection - v1;
+    //     Vector3f edge6 = intersection - v2;
+
+    //     if (dotProduct(edge1, edge4) * dotProduct(edge2, edge5) > 0 && 
+    //     dotProduct(edge1, edge4) * dotProduct(edge3, edge6) > 0) {
+    //         isIntersect = true;
+    //     }
+    // }
+    // return isIntersect;
+
+    // function2 : Moller-Trumbore
+    //   step1 : calculate the intersection of the ray and the triangle, and the intersection in terms of barycenter coordinates
+    const float kEpsilon = 0.0001; // Used to determine whether two floats are equal
+
+    Vector3f edge1 = v1 - v0;
+    Vector3f edge2 = v2 - v0;
+    Vector3f pvec = crossProduct(dir, edge2);
+    float det = dotProduct(edge1, pvec);
+
+    if (fabs(det) < kEpsilon) {
+        return false;
+    }
+
+    float invDet = 1.0f / det;
+    Vector3f tvec = orig - v0;
+    u = dotProduct(tvec, pvec) * invDet;
+
+    if (u < 0.0f || u > 1.0f) {
+        return false;
+    }
+
+    Vector3f qvec = crossProduct(tvec, edge1);
+    v = dotProduct(dir, qvec) * invDet;
+
+    if (v < 0.0f || u + v > 1.0f) {
+        return false;
+    }
+
+    tnear = dotProduct(edge2, qvec) * invDet;
+
+    if (tnear < kEpsilon) {
+        return false;
+    }
+
+    return true;
 }
 
 class MeshTriangle : public Object

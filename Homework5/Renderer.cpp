@@ -123,6 +123,9 @@ std::optional<hit_payload> trace(
 // [/comment]
 Vector3f castRay(
         const Vector3f &orig, const Vector3f &dir, const Scene& scene,
+        int depth);
+Vector3f castRay(
+        const Vector3f &orig, const Vector3f &dir, const Scene& scene,
         int depth)
 {
     if (depth > scene.maxDepth) {
@@ -231,7 +234,7 @@ void Renderer::Render(const Scene& scene)
             // x (horizontal) variable with the *imageAspectRatio*
 
             Vector3f dir = Vector3f(x, y, -1); // Don't forget to normalize this direction!
-            framebuffer[m++] = castRay(eye_pos, dir, scene, 0);
+            framebuffer[m++] = castRay(eye_pos, normalize(dir), scene, 0);
         }
         UpdateProgress(j / (float)scene.height);
     }
