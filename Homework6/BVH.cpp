@@ -56,18 +56,21 @@ BVHBuildNode* BVHAccel::recursiveBuild(std::vector<Object*> objects)
         int dim = centroidBounds.maxExtent();
         switch (dim) {
         case 0:
+            // sort objects by x position
             std::sort(objects.begin(), objects.end(), [](auto f1, auto f2) {
                 return f1->getBounds().Centroid().x <
                        f2->getBounds().Centroid().x;
             });
             break;
         case 1:
+            // sort objects by y position
             std::sort(objects.begin(), objects.end(), [](auto f1, auto f2) {
                 return f1->getBounds().Centroid().y <
                        f2->getBounds().Centroid().y;
             });
             break;
         case 2:
+            // sort objects by z position
             std::sort(objects.begin(), objects.end(), [](auto f1, auto f2) {
                 return f1->getBounds().Centroid().z <
                        f2->getBounds().Centroid().z;
@@ -104,6 +107,20 @@ Intersection BVHAccel::Intersect(const Ray& ray) const
 
 Intersection BVHAccel::getIntersection(BVHBuildNode* node, const Ray& ray) const
 {
-    // TODO Traverse the BVH to find intersection
-
+    // If the node's bounds don't intersect with the ray, return empty intersection
+    if (!node->bounds.IntersectP(ray))
+        return Intersection();
+    // If we're at a leaf node, return the intersection with the contained object
+    else if (node->left == nullptr && node->right == nullptr)
+        return node->object->getIntersection(ray);
+    // Otherwise, recurse on both children
+    else {
+        Intersection left = getIntersection(node->left, ray);
+        Intersection right = getIntersection(node->right, ray);
+        // Return the closest intersection
+        if (left.distance < right.distance)
+            return left;
+        else
+            return right;
+    }
 }
