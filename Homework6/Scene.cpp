@@ -6,7 +6,9 @@
 
 
 void Scene::buildBVH() {
-    printf(" - Generating BVH...\n\n");
+    // printf(" - Generating BVH...\n\n");
+    // this->bvh = new BVHAccel(objects, 1, BVHAccel::SplitMethod::NAIVE);
+    printf(" - Generating BVH by use SAH...\n\n");
     this->bvh = new BVHAccel(objects, 1, BVHAccel::SplitMethod::NAIVE);
 }
 
