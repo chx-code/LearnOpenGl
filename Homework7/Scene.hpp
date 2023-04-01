@@ -15,6 +15,8 @@
 
 class Scene
 {
+private:
+    Vector3f shader(const Ray &ray, const Intersection &p) const;
 public:
     // setting up options
     int width = 1280;

@@ -108,7 +108,24 @@ Intersection BVHAccel::Intersect(const Ray& ray) const
 Intersection BVHAccel::getIntersection(BVHBuildNode* node, const Ray& ray) const
 {
     // TODO Traverse the BVH to find intersection
-
+    // If the node's bounds don't intersect with the ray, return empty intersection
+    const Vector3f& invDir = ray.direction_inv;
+    const std::array<int, 3>& dirIsNeg = {int(ray.direction.x>0),int(ray.direction.y>0),int(ray.direction.z>0)};
+    if (!node->bounds.IntersectP(ray, invDir, dirIsNeg))
+        return Intersection();
+    // If we're at a leaf node, return the intersection with the contained object
+    else if (node->left == nullptr && node->right == nullptr)
+        return node->object->getIntersection(ray);
+    // Otherwise, recurse on both children
+    else {
+        Intersection left = getIntersection(node->left, ray);
+        Intersection right = getIntersection(node->right, ray);
+        // Return the closest intersection
+        if (left.distance < right.distance)
+            return left;
+        else
+            return right;
+    }
 }
 
 
