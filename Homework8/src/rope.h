@@ -21,6 +21,8 @@ public:
 
   vector<Mass *> masses;
   vector<Spring *> springs;
+
+  float damping = 0.00005;
 }; // struct Rope
 }
 #endif /* ROPE_H */
